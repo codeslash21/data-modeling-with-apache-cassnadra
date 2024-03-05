@@ -13616,7 +13616,7 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.-Give-me-the-artist,-song-title-and-song's-length-in-the-music-app-history-that-was-heard-during-a-given--sessionId-and-itemInSession">1. Give me the artist, song title and song's length in the music app history that was heard during a given  sessionId and itemInSession<a class="anchor-link" href="#1.-Give-me-the-artist,-song-title-and-song's-length-in-the-music-app-history-that-was-heard-during-a-given--sessionId-and-itemInSession">&#182;</a></h3><p><strong>Table Name:</strong> <code>song_details_session_item</code></p>
+<h3 id="Query-1.-Give-me-the-artist,-song-title-and-song's-length-in-the-music-app-history-that-was-heard-during-a-given--sessionId-and-itemInSession">Query 1. Give me the artist, song title and song's length in the music app history that was heard during a given  sessionId and itemInSession<a class="anchor-link" href="#Query-1.-Give-me-the-artist,-song-title-and-song's-length-in-the-music-app-history-that-was-heard-during-a-given--sessionId-and-itemInSession">&#182;</a></h3><p><strong>Table Name:</strong> <code>song_details_session_item</code></p>
 <p><strong>Columns:</strong></p>
 <ul>
 <li><code>sessionId</code></li>
@@ -13626,6 +13626,7 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <li><code>songLength</code></li>
 </ul>
 <p><strong>Primary Key:</strong> <code>sessionId, itemInSession</code></p>
+<p>The reason behind choosing <code>sessionId</code> and <code>itemInSession</code> as primary key is that we have to filter the data based on the given <code>sessionId</code> and <code>itemInSession</code> value. Here <code>sessionId</code> is the partition column and <code>itemInSession</code> is the clustering column and both this column can make primary key unique.</p>
 
 </div>
 </div>
@@ -13677,7 +13678,8 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Do-a-SELECT-with-condition--sessionId-=-338-and-itemInSession--=-4">Do a SELECT with condition  sessionId = 338 and itemInSession  = 4<a class="anchor-link" href="#Do-a-SELECT-with-condition--sessionId-=-338-and-itemInSession--=-4">&#182;</a></h4>
+<h4 id="Do-a-SELECT-with-condition--sessionId-=-338-and-itemInSession--=-4">Do a SELECT with condition  sessionId = 338 and itemInSession  = 4<a class="anchor-link" href="#Do-a-SELECT-with-condition--sessionId-=-338-and-itemInSession--=-4">&#182;</a></h4><p>The following query will return artist, song and songLength where the sessionId=338 and itemInSession=4</p>
+
 </div>
 </div>
 </div>
@@ -13732,7 +13734,7 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2.-Give-me-only-the-following:-name-of-artist,-song-(sorted-by-itemInSession)-and-user-(first-and-last-name)-for-given-userid-and-sessionid">2. Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name) for given userid and sessionid<a class="anchor-link" href="#2.-Give-me-only-the-following:-name-of-artist,-song-(sorted-by-itemInSession)-and-user-(first-and-last-name)-for-given-userid-and-sessionid">&#182;</a></h3><p><strong>Table Name:</strong> <code>artist_song_user_on_userid_session</code></p>
+<h3 id="Query-2.-Give-me-only-the-following:-name-of-artist,-song-(sorted-by-itemInSession)-and-user-(first-and-last-name)-for-given-userid-and-sessionid">Query 2. Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name) for given userid and sessionid<a class="anchor-link" href="#Query-2.-Give-me-only-the-following:-name-of-artist,-song-(sorted-by-itemInSession)-and-user-(first-and-last-name)-for-given-userid-and-sessionid">&#182;</a></h3><p><strong>Table Name:</strong> <code>artist_song_user_on_userid_session</code></p>
 <p><strong>Columns:</strong></p>
 <ul>
 <li><code>userId</code></li>
@@ -13744,6 +13746,7 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <li><code>lastName</code></li>
 </ul>
 <p><strong>Primary Key:</strong> <code>userId, sessionId, itemInSession</code></p>
+<p>The combination of <code>userId</code> and <code>sessionId</code> will not make the primary key unique. So, we need another column to add to make the primary key unique. And also we have to sort the rows based on <code>itemInSession</code> and we know that the clustering column sort data within a partition in ascending order. So, we can add <code>itemInSession</code> as clustering column to make the primary key unique and also to sort the data based on <code>itemInSession</code> value. Here <code>userId</code> is the ppartition column and <code>sessionId</code> and <code>itemInSession</code> are clustering columns.</p>
 
 </div>
 </div>
@@ -13797,7 +13800,8 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Do-a-SELECT-with-condition-userId=10--sessionId-=-182">Do a SELECT with condition userId=10  sessionId = 182<a class="anchor-link" href="#Do-a-SELECT-with-condition-userId=10--sessionId-=-182">&#182;</a></h4>
+<h4 id="Do-a-SELECT-with-condition-userId=10--sessionId-=-182">Do a SELECT with condition userId=10  sessionId = 182<a class="anchor-link" href="#Do-a-SELECT-with-condition-userId=10--sessionId-=-182">&#182;</a></h4><p>The following query return artist, song(sorted based on itemInSession in ascending order), firstName and lastName from table where userId=10 and sessionId=182</p>
+
 </div>
 </div>
 </div>
@@ -13864,6 +13868,7 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <li><code>lastName</code></li>
 </ul>
 <p><strong>Primary Key:</strong> <code>song, userId</code></p>
+<p>Here, we want the user name who listened to a particular song. So, here only <code>song</code> cant be a primary key alone, as it dont make primary key unique. As there may more than one user who listen to a particular song. So, we can add <code>userId</code> to <code>song</code> to make our primary key. Although <code>song</code> and <code>userId</code> may not uniquely identify a row, but in this case that wont be a problem. As, in apache cassandra when we try to insert data, if there is already data with the same primary key then data will be updated and no error will be thrown. And, in this case we are only interested to the user name. Even though data will be updated but we will have the same user name as for a particular <code>userId</code> <code>firstName</code> and <code>lastName</code> is same always. So, here <code>song</code> is the partition key and <code>userId</code> is the clustering column.</p>
 
 </div>
 </div>
@@ -13914,7 +13919,8 @@ Files: [&#39;2018-11-10-events.csv&#39;, &#39;2018-11-20-events.csv&#39;, &#39;2
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Do-a-SELECT-with-condition--song='All-Hands-Against-His-Own'">Do a SELECT with condition  song='All Hands Against His Own'<a class="anchor-link" href="#Do-a-SELECT-with-condition--song='All-Hands-Against-His-Own'">&#182;</a></h4>
+<h4 id="Do-a-SELECT-with-condition--song='All-Hands-Against-His-Own'">Do a SELECT with condition  song='All Hands Against His Own'<a class="anchor-link" href="#Do-a-SELECT-with-condition--song='All-Hands-Against-His-Own'">&#182;</a></h4><p>The following query will return user firstName and lastName who listen to the given song.</p>
+
 </div>
 </div>
 </div>
